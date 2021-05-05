@@ -45,11 +45,11 @@ KERNEL_DIR="$(pwd)"
 BASEDIR="$(basename "$KERNEL_DIR")"
 
 # The name of the Kernel, to name the ZIP
-ZIPNAME="azure"
+ZIPNAME="NetErnels"
 
 # Build Author
 # Take care, it should be a universal and most probably, case-sensitive
-AUTHOR="Panchajanya1999"
+AUTHOR="G913"
 
 # Architecture
 ARCH=arm64
@@ -62,7 +62,7 @@ DEVICE="violet"
 
 # The defconfig which should be used. Get it from config.gz from
 # your device or check source
-DEFCONFIG=vendor/violet-perf_defconfig
+DEFCONFIG=vendor/kali_defconfig
 
 # Specify compiler. 
 # 'clang' or 'gcc'
@@ -118,7 +118,7 @@ SILENCE=0
 
 # Debug purpose. Send logs on every successfull builds
 # 1 is YES | 0 is NO(default)
-LOG_DEBUG=0
+LOG_DEBUG=1
 
 ##------------------------------------------------------##
 ##---------Do Not Touch Anything Beyond This------------##
@@ -186,7 +186,7 @@ DATE=$(TZ=Asia/Jakarta date +"%Y%m%d-%T")
 	fi
 
 	msg "|| Cloning Anykernel ||"
-	git clone --depth 1 --no-single-branch https://github.com/"$AUTHOR"/AnyKernel3.git
+	git clone --depth 1 https://github.com/Panchajanya1999/AnyKernel3.git -b violet-q
 	msg "|| Cloning libufdt ||"
 	git clone https://android.googlesource.com/platform/system/libufdt "$KERNEL_DIR"/scripts/ufdt/libufdt
 }
@@ -207,7 +207,7 @@ exports() {
 		PATH=$GCC64_DIR/bin/:$GCC32_DIR/bin/:/usr/bin:$PATH
 	fi
 
-	BOT_MSG_URL="https://api.telegram.org/bot$token/sendMessage"
+	BOT_MSG_URL="https://api.telegram.org/bot1$token/sendMessage"
 	BOT_BUILD_URL="https://api.telegram.org/bot$token/sendDocument"
 	PROCS=$(nproc --all)
 
@@ -309,7 +309,8 @@ build_kernel() {
 				msg "|| Building DTBO ||"
 				tg_post_msg "<code>Building DTBO..</code>"
 				python2 "$KERNEL_DIR/scripts/ufdt/libufdt/utils/src/mkdtboimg.py" \
-					create "$KERNEL_DIR/out/arch/arm64/boot/dtbo.img" --page_size=4096 "$KERNEL_DIR/out/arch/arm64/boot/dts/$DTBO_PATH"
+					create "$KERNEL_DIR/out/arch/arm64/boot/dtbo.img" --page_size=4096 "$KERNEL_DIR/out/arch/arm64/boot/dts/qcom/sm6150-idp-overlay.dtbo
+
 			fi
 				gen_zip
 			else
