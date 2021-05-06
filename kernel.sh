@@ -55,10 +55,10 @@ AUTHOR="G913"
 ARCH=arm64
 
 # The name of the device for which the kernel is built
-MODEL="Redmi Note 7 Pro"
+MODEL="MI A3"
 
 # The codename of the device
-DEVICE="violet"
+DEVICE="laurel_sprout"
 
 # The defconfig which should be used. Get it from config.gz from
 # your device or check source
@@ -91,7 +91,7 @@ FILES=Image.gz-dtb
 
 # Build dtbo.img (select this only if your source has support to building dtbo.img)
 # 1 is YES | 0 is NO(default)
-BUILD_DTBO=1
+BUILD_DTBO=0
 	if [ $BUILD_DTBO = 1 ]
 	then 
 		# Set this to your dtbo path. 
@@ -361,6 +361,7 @@ clone
 exports
 build_kernel
 
+ls "$KERNEL_DIR"/out/arch/arm64/boot/*
 if [ $LOG_DEBUG = "1" ]
 then
 	tg_post_build "error.log" "$CHATID" "Debug Mode Logs"
