@@ -91,7 +91,7 @@ FILES=Image.gz-dtb
 
 # Build dtbo.img (select this only if your source has support to building dtbo.img)
 # 1 is YES | 0 is NO(default)
-BUILD_DTBO=1
+BUILD_DTBO=0
 	if [ $BUILD_DTBO = 1 ]
 	then 
 		# Set this to your dtbo path. 
@@ -186,7 +186,7 @@ DATE=$(TZ=Asia/Jakarta date +"%Y%m%d-%T")
 	fi
 
 	msg "|| Cloning Anykernel ||"
-	git clone --depth 1 https://github.com/Panchajanya1999/AnyKernel3.git -b violet-q
+	git clone --depth 1 https://github.com/karthik558/AnyKernel3.git -b violet-r
 	msg "|| Cloning libufdt ||"
 	git clone https://android.googlesource.com/platform/system/libufdt "$KERNEL_DIR"/scripts/ufdt/libufdt
 }
@@ -230,14 +230,14 @@ tg_post_msg() {
 
 tg_post_build() {
 	#Post MD5Checksum alongwith for easeness
-	MD5CHECK=$(md5sum "$1" | cut -d' ' -f1)
+	#MD5CHECK=$(md5sum "$1" | cut -d' ' -f1)
 
 	#Show the Checksum alongwith caption
 	curl --progress-bar -F document=@"$1" "$BOT_BUILD_URL" \
 	-F chat_id="$CHATID"  \
 	-F "disable_web_page_preview=true" \
 	-F "parse_mode=html" \
-	-F caption="$2 | <b>MD5 Checksum : </b><code>$MD5CHECK</code>"
+	#-F caption="$2 | <b>MD5 Checksum : </b><code>$MD5CHECK</code>"
 }
 
 ##----------------------------------------------------------##
@@ -345,7 +345,7 @@ gen_zip() {
  			msg "|| Signing Zip ||"
 			tg_post_msg "<code>Signing Zip file with AOSP keys..</code>"
  		fi
-		curl -sLo zipsigner-3.0.jar https://raw.githubusercontent.com/baalajimaestro/AnyKernel2/master/zipsigner-3.0.jar
+		curl -sLo zipsigner-3.0.jar https://github.com/Mayankgaj/zipsigner-3.0/blob/main/zipsigner.jar
 		java -jar zipsigner-3.0.jar "$ZIP_FINAL".zip "$ZIP_FINAL"-signed.zip
 		ZIP_FINAL="$ZIP_FINAL-signed"
 	fi
